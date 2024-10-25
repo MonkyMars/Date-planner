@@ -1,0 +1,44 @@
+.calendar {
+  width: 100%;
+  margin: auto;
+  border: 2px solid;
+  position: relative;
+  z-index: 1;
+  font-family: "poppins";
+  padding: 1em 0;
+  & * > button {
+    background-color: #e3e3e3 !important;
+    color: #000 !important;
+    margin: 6px !important;
+    border-radius: 10px !important;
+    border: none !important;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
+}
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'poppins';
+  color: #e3e3e3 !important;
+  & button{
+    width: 90%;
+    padding: 1em 0;
+    margin: 1em;
+    cursor: pointer;
+    font-family: 'poppins';
+    background-color: transparent;
+    color: var(--font-color);
+    background-color: #e3e3e395;
+    border-radius: 20px;
+    border:none;
+    font-size: 1em;
+    transition: all 0.5s;
+    &:active{
+      scale: 0.95
+    }
+  }
+}
