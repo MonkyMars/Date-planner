@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
 
 .popupOverlay {
   position: fixed;
@@ -14,13 +14,13 @@
 }
 
 .popupContent {
-  background: linear-gradient(135deg, #FFD3A5 0%, #FD6585 100%);
+  background: linear-gradient(135deg, #ffd3a5 0%, #fd6585 100%);
   padding: 20px;
   border-radius: 12px;
   text-align: center;
   width: 300px;
   color: #333;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
   animation: popupFadeIn 0.3s ease-in-out;
   display: flex;
@@ -47,7 +47,7 @@
   margin: 10px 0;
   color: #fff;
 }
-.popupContent span{
+.popupContent span {
   border-radius: 50%;
   border: 1px solid #fff;
   min-width: 1em;
@@ -60,7 +60,7 @@
   color: #fff;
 }
 
-.popupContent div{
+.popupContent div {
   display: flex;
   gap: 10px;
   align-items: center;
@@ -76,7 +76,7 @@
   font-size: 16px;
   cursor: pointer;
   border-radius: 8px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   transition: background-color 0.3s ease;
 }
 
@@ -86,14 +86,14 @@
 
 .closeButton {
   margin-top: 20px;
-  background: linear-gradient(135deg, #FFF5EC 0%, #FFE6E0 100%);
+  background: linear-gradient(135deg, #fff5ec 0%, #ffe6e0 100%);
   color: #fd6585;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 8px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   transition: background-color 0.3s ease;
   width: 75%;
 }
@@ -114,17 +114,15 @@
   }
 }
 
-
-
 .inputField {
   width: 65%;
-  max-width: 300px;  /* Smaller width */
+  max-width: 300px;
   padding: 10px 16px;
-  font-size: 14px;  /* Smaller text */
-  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
   border: 1px solid transparent;
   border-radius: 6px;
-  background: linear-gradient(135deg, #FFF5EC 0%, #FFE6E0 100%);  /* More white-ish gradient */
+  background: linear-gradient(135deg, #fff5ec 0%, #ffe6e0 100%);
   color: #333;
   outline: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -142,7 +140,7 @@
   }
 
   &:focus {
-    background: linear-gradient(135deg, #FFFFFF 0%, #FFE6E0 100%);  /* Lighter on focus */
+    background: linear-gradient(135deg, #ffffff 0%, #ffe6e0 100%);
     border-color: #fd6585;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   }
@@ -155,7 +153,7 @@
   border: none;
   padding: 10px 16px;
   font-size: 14px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   cursor: pointer;
   border-radius: 6px;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -170,9 +168,40 @@
   }
 }
 
-.popupContent code{
-  font-family: 'poppins';
+.popupContent code {
+  font-family: "poppins";
   font-size: medium;
   color: #fff;
-  margin: .3em;
+  margin: 0.3em;
+}
+
+.popupContent div:has(input[type="date"]) {
+  & input[type="date"] {
+    border: none;
+    border-radius: 10px;
+    font-family: "poppins";
+    cursor: pointer;
+    &:focus {
+      background: linear-gradient(135deg, #ffffff 0%, #ffe6e0 100%) !important;
+      outline: 2px solid #fd6585 !important;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1) !important;
+    }
+    &::placeholder {
+      color: rgba(51, 51, 51, 0.5);
+      font-size: 13px;
+      font-weight: 300;
+    }
+    &:hover {
+      border-color: #fd6585;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden !important;
+  justify-content: center;
+  align-items: flex-start;
+  left: -15px;
+  position: relative;
 }

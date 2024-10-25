@@ -8,10 +8,15 @@ import listPlugin from '@fullcalendar/list';
 import styles from "../styles/Home.module.scss";
 import DateIdeaPopup from '../components/DateIdeaPopUp';
 
+interface DateIdea {
+  idea: string;
+  date: string | null;
+}
+
 const Home: NextPage = () => {
   const calendarRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = React.useState(false);
-  const [calendar, setCalendar] = React.useState<Calendar | null>(null); // State to hold calendar instance
+  const [calendar, setCalendar] = React.useState<Calendar | null>(null);
 
   useEffect(() => {
     if (calendarRef.current) {
@@ -25,16 +30,16 @@ const Home: NextPage = () => {
         }
       });
       newCalendar.render();
-      setCalendar(newCalendar); // Save calendar instance
+      setCalendar(newCalendar);
     }
   }, []);
 
-  const handleAddEvents = (dateIdeas: string[]) => {
+  const handleAddEvents = (dateIdeas: DateIdea[]) => {
     if (calendar) {
-      dateIdeas.forEach((idea) => {
+      dateIdeas.forEach(({ idea, date }) => {
         calendar.addEvent({
           title: idea,
-          start: new Date(),
+          start: date ? new Date(date) : new Date(), // Use specific date or default to today
           allDay: true
         });
       });

@@ -1,25 +1,28 @@
-import Head from "next/head";
 import React, { useState } from "react";
-import styles from "../styles/Popup.module.scss"; // Custom styles for the popup
+import styles from "../styles/Popup.module.scss";
 
-const DateIdeaPopup = ({ setVisible, onAddEvents }) => {
-  const dateIdeas = ["Samen koken", "Eindhoven", "Film kijken", "All-nighter"]; // Example date ideas
+interface DateIdeaPopupProps {
+  setVisible: (visible: boolean) => void;
+  onAddEvents: (dateIdeas: { idea: string; date: string | null }[]) => void;
+}
+
+const DateIdeaPopup: React.FC<DateIdeaPopupProps> = ({ setVisible, onAddEvents }) => {
+  const dateIdeas = ["Samen koken", "Eindhoven", "Film kijken", "All-nighter"];
   const [selected, setSelected] = useState<number[]>([]);
-  const [date, setDate] = useState<string[]>([]); // Ensure it's an array of strings
-  const [customIdea, setCustomIdea] = useState<string>(""); // State for the custom date idea
+  const [date, setDate] = useState<string[]>([]);
+  const [customIdea, setCustomIdea] = useState<string>("");
+  const [visibleDate, setVisibleDate] = useState<boolean>(false);
+  const [datesForIdeas, setDatesForIdeas] = useState<{ [key: string]: string | null }>({});
 
   const handleSelect = (index: number) => {
     setSelected((prevSelected) => {
       const newSelected = prevSelected.includes(index)
         ? prevSelected.filter((i) => i !== index)
         : [...prevSelected, index];
-
-      // Update date to include selected ideas and any existing custom ideas
       const newDate = [
         ...newSelected.map((i) => dateIdeas[i]),
-        ...date.filter((idea) => !dateIdeas.includes(idea)), // Include existing custom ideas
+        ...date.filter((idea) => !dateIdeas.includes(idea)),
       ];
-
       setDate(newDate);
       return newSelected;
     });
@@ -36,19 +39,32 @@ const DateIdeaPopup = ({ setVisible, onAddEvents }) => {
     }
   };
 
+  const handleDateChange = (idea: string, newDate: string) => {
+    setDatesForIdeas((prevDates) => ({
+      ...prevDates,
+      [idea]: newDate,
+    }));
+  };
+
   const handleSubmit = () => {
-    onAddEvents(date); // Call the function passed from the Home component
-    setVisible(false); // Optionally close the popup after submission
+    const selectedEvents = date.map((idea) => ({
+      idea,
+      date: datesForIdeas[idea] || null,
+    }));
+    onAddEvents(selectedEvents);
+    setVisible(false);
   };
 
   const removeDate = (index: number) => {
+    const ideaToRemove = date[index];
     setDate((prevDates) => prevDates.filter((_, i) => i !== index));
-    setSelected((prevDates) => prevDates.filter((_, i) => i !== index));
+    setSelected((prevSelected) => prevSelected.filter((_, i) => i !== index));
+    setDatesForIdeas((prevDates) => {
+      const updatedDates = { ...prevDates };
+      delete updatedDates[ideaToRemove];
+      return updatedDates;
+    });
   };
-
-  React.useEffect(() => {
-    console.log(date);
-  }, [date]);
 
   return (
     <>
@@ -101,11 +117,45 @@ const DateIdeaPopup = ({ setVisible, onAddEvents }) => {
           {date.length > 0 && (
             <>
               <code>Selected date ideas:</code>
-              <ul>
+              <ul
+                style={{
+                  overflowY: "auto",
+                  overflowX: "hidden",
+                  maxHeight: "150px",
+                  maxWidth: "100%",
+                }}
+              >
                 {date.map((idea, index) => (
-                  <div key={index} onClick={() => removeDate(index)}>
-                    <span style={{ backgroundColor: '#EA3323', border: 'none', fontSize: '1em', padding: '.2em', cursor: 'pointer' }}>X</span>
-                    <li>{idea}</li>
+                  <div key={index}>
+                    <div>
+                      <span
+                        onClick={() => removeDate(index)}
+                        style={{
+                          backgroundColor: "#EA3323",
+                          border: "none",
+                          fontSize: "1em",
+                          padding: ".2em",
+                          cursor: "pointer",
+                        }}
+                      >
+                        X
+                      </span>
+                      <li onClick={() => setVisibleDate(!visibleDate)}>
+                        {idea}
+                      </li>
+                    </div>
+                    <div>
+                      <input
+                        type="date"
+                        style={{
+                          height: visibleDate ? "auto" : "-4px",
+                          padding: visibleDate ? "1em" : "-4px",
+                          opacity: visibleDate ? "1" : "0",
+                        }}
+                        value={datesForIdeas[idea] || ""}
+                        onChange={(e) => handleDateChange(idea, e.target.value)}
+                      />
+                    </div>
                   </div>
                 ))}
               </ul>
